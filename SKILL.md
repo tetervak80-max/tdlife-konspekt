@@ -279,7 +279,7 @@ CSS:
 CSS:
 ```css
 .footer-contact { background: var(--bg-card); border-radius: var(--radius); padding: 28px; margin-top: 12px; box-shadow: var(--shadow); text-align: center; }
-.contact-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; object-position: center top; display: block; margin: 0 auto 12px; border: 3px solid var(--bg-blue-muted); }
+.contact-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; object-position: center 15%; display: block; margin: 0 auto 12px; border: 3px solid var(--bg-blue-muted); }
 .contact-name { font-size: 18px; font-weight: 700; color: var(--dark); }
 .contact-desc { font-size: 13px; color: var(--grey); margin: 6px 0 16px; line-height: 1.6; }
 .contact-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
