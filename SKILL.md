@@ -249,7 +249,7 @@ CSS:
 
 ```html
 <div class="footer-contact">
-  <div class="contact-avatar">ДТ</div>
+  <img class="contact-avatar" src="https://raw.githubusercontent.com/tetervak80-max/tdlife-konspekt/main/photo.jpg" alt="Дмитро Тетервак">
   <div class="contact-name">Дмитро Тетервак</div>
   <div class="contact-desc lang-uk">
     Ментор · Консультант · Фасилітатор мастермайндів<br>
@@ -279,7 +279,7 @@ CSS:
 CSS:
 ```css
 .footer-contact { background: var(--bg-card); border-radius: var(--radius); padding: 28px; margin-top: 12px; box-shadow: var(--shadow); text-align: center; }
-.contact-avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--blue); color: white; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.contact-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; object-position: center top; display: block; margin: 0 auto 12px; border: 3px solid var(--bg-blue-muted); }
 .contact-name { font-size: 18px; font-weight: 700; color: var(--dark); }
 .contact-desc { font-size: 13px; color: var(--grey); margin: 6px 0 16px; line-height: 1.6; }
 .contact-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
