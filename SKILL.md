@@ -76,7 +76,7 @@ Default language: `<body class="uk">`.
   </span>
   <div class="lang-buttons">
     <button class="lang-btn active" data-lang="uk" onclick="setLang('uk')">🇺🇦 Українська</button>
-    <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">🇷🇺 Русский</button>
+    <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">🇷🇺 Русский (пока, к сожалению)</button>
   </div>
 </div>
 ```
@@ -199,7 +199,52 @@ li { margin-bottom: 8px; }
 .stat-lbl { font-size: 12px; color: var(--grey); margin-top: 4px; }
 ```
 
-### 3. Checklist (required, after all sections)
+### 3. Q&A Block (required if transcript contains Q&A dialogue)
+
+Extract 4–8 real questions from the transcript with the speaker's actual answers. Place after all sections, before the checklist.
+
+```html
+<div class="qa-block">
+  <div class="qa-title lang-uk">❓ Запитання та відповіді</div>
+  <div class="qa-title lang-ru">❓ Вопросы и ответы</div>
+  <div class="qa-desc lang-uk">Найцікавіші питання з Q&A — слова спікера</div>
+  <div class="qa-desc lang-ru">Самые интересные вопросы из Q&A — слова спикера</div>
+
+  <div class="qa-item">
+    <div class="qa-q">
+      <span class="qa-icon">🙋</span>
+      <div class="qa-q-text">
+        <div class="lang-uk">Питання українською</div>
+        <div class="lang-ru">Вопрос на русском</div>
+      </div>
+    </div>
+    <div class="qa-a">
+      <span class="qa-icon">💬</span>
+      <div class="qa-a-text">
+        <div class="lang-uk">Відповідь спікера українською</div>
+        <div class="lang-ru">Ответ спикера на русском</div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+CSS:
+```css
+.qa-block { background: var(--bg-card); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.qa-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.qa-desc { font-size: 14px; color: var(--grey); margin-bottom: 20px; }
+.qa-item { border-bottom: 1px solid #f3f4f6; padding: 16px 0; }
+.qa-item:last-child { border-bottom: none; padding-bottom: 0; }
+.qa-q { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+.qa-a { display: flex; gap: 12px; align-items: flex-start; background: var(--bg-body); border-radius: 10px; padding: 12px 14px; }
+.qa-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.qa-q-text { font-weight: 500; color: var(--dark); font-size: 14px; line-height: 1.5; }
+.qa-a-text { color: var(--grey); font-size: 14px; line-height: 1.6; }
+.qa-a-text strong { color: var(--dark); }
+```
+
+### 4. Checklist (required, after all sections)
 
 8–12 action items grouped into 2–3 semantic groups.
 
