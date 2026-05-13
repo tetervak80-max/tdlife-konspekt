@@ -25,10 +25,12 @@ When you receive a transcript (a block of text from a lesson, speech, webinar, o
   --pink: #FA2F6B;        /* warnings, important */
   --blue: #2463EB;        /* insights, accents */
   --sky: #6AC2EA;         /* quotes */
+  --green: #16A34A;       /* correct answers */
   --bg-body: #F9FAFB;
   --bg-card: #FFFFFF;
   --bg-blue-muted: #C9D7F5;
   --bg-pink-muted: #F9CCDB;
+  --bg-green-muted: #DCFCE7; /* correct answer bg */
   --shadow: 0 4px 12px rgba(0,0,0,0.06);
   --radius: 16px;
 }
@@ -120,7 +122,69 @@ CSS:
 .tag { background: var(--bg-blue-muted); color: var(--blue); border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 500; }
 ```
 
-### 2. Sections (5–8 per konspekt)
+### 2. Cases Block (required if transcript contains practical cases / кейсы)
+
+**Position: immediately after the Header, before all Sections.** Top border: `border-top: 6px solid var(--sky)`.
+
+Each case must show the situation + a two-column verdict grid:
+- ❌ Left (pink) — рефлексивно / неправильно (what most people do instinctively)
+- ✅ Right (green) — правильно (what Зорін / the speaker recommends)
+
+```html
+<div class="cases-block">
+  <div class="cases-title lang-uk">🎬 Вводні кейси від [Speaker]</div>
+  <div class="cases-title lang-ru">🎬 Вводные кейсы от [Speaker]</div>
+  <div class="cases-desc lang-uk">Реальні ситуації з розбором: як робить більшість і як треба насправді</div>
+  <div class="cases-desc lang-ru">Реальные ситуации с разбором: как делает большинство и как надо на самом деле</div>
+
+  <div class="case-item">
+    <div class="case-header">
+      <div class="case-num">1</div>
+      <div class="case-situation">
+        <div class="lang-uk">Опис ситуації українською</div>
+        <div class="lang-ru">Описание ситуации на русском</div>
+      </div>
+    </div>
+    <div class="verdict-row">
+      <div class="verdict-wrong">
+        <div class="verdict-label">❌ Рефлексивно / неправильно</div>
+        <div class="verdict-text lang-uk">Що робить більшість</div>
+        <div class="verdict-text lang-ru">Что делает большинство</div>
+      </div>
+      <div class="verdict-right">
+        <div class="verdict-label">✅ Правильно</div>
+        <div class="verdict-text lang-uk">Що треба робити</div>
+        <div class="verdict-text lang-ru">Что нужно делать</div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+CSS:
+```css
+.cases-block { background: var(--bg-card); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; box-shadow: var(--shadow); border-top: 6px solid var(--sky); }
+.cases-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.cases-desc { font-size: 14px; color: var(--grey); margin-bottom: 24px; }
+.case-item { border-bottom: 1px solid #f3f4f6; padding: 20px 0; }
+.case-item:last-child { border-bottom: none; padding-bottom: 0; }
+.case-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+.case-num { width: 28px; height: 28px; border-radius: 50%; background: var(--sky); color: white; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.case-situation { font-size: 14px; font-weight: 500; color: var(--dark); line-height: 1.5; }
+.verdict-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.verdict-wrong { background: var(--bg-pink-muted); border-left: 4px solid var(--pink); border-radius: 10px; padding: 12px 14px; }
+.verdict-right { background: var(--bg-green-muted); border-left: 4px solid var(--green); border-radius: 10px; padding: 12px 14px; }
+.verdict-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.verdict-wrong .verdict-label { color: var(--pink); }
+.verdict-right .verdict-label { color: var(--green); }
+.verdict-text { font-size: 13px; color: var(--grey); line-height: 1.5; }
+.verdict-text strong { color: var(--dark); }
+@media (max-width: 600px) { .verdict-row { grid-template-columns: 1fr; } }
+```
+
+---
+
+### 3. Sections (5–8 per konspekt)
 
 Each section = one semantic theme from the transcript.
 
@@ -290,33 +354,115 @@ CSS:
 .chk-text span { font-size: 13px; color: var(--grey); }
 ```
 
-### 4. Footer (required, last element)
+### 5. Sources Block (required if speaker mentions ANY sources)
+
+Extract ALL sources mentioned by the speaker: books, articles, YouTube channels/videos, tools, websites, courses, people, studies, podcasts, etc. Place after Checklist, before CTA Banner.
+
+**Trigger**: Any mention of a book title, author, URL, tool name, channel, study, or "рекомендую почитати/послухати/подивитися" → this block is required.
+
+```html
+<div class="sources-block">
+  <div class="sources-title lang-uk">📚 Джерела та рекомендації</div>
+  <div class="sources-title lang-ru">📚 Источники и рекомендации</div>
+  <div class="sources-desc lang-uk">Все що згадав спікер — книги, інструменти, канали, люди</div>
+  <div class="sources-desc lang-ru">Всё что упомянул спикер — книги, инструменты, каналы, люди</div>
+
+  <div class="source-item">
+    <div class="source-type">📖 Книга</div>
+    <div class="source-body">
+      <div class="source-name">
+        <span class="lang-uk">Назва книги</span>
+        <span class="lang-ru">Название книги</span>
+      </div>
+      <div class="source-author lang-uk">Автор · контекст згадки</div>
+      <div class="source-author lang-ru">Автор · контекст упоминания</div>
+    </div>
+  </div>
+</div>
+```
+
+**Source type labels** (use the most fitting):
+- 📖 Книга / Книга
+- 🎥 YouTube / YouTube
+- 🛠 Інструмент / Инструмент
+- 🌐 Сайт / Сайт
+- 🎙 Подкаст / Подкаст
+- 📄 Стаття / Статья
+- 👤 Особа / Персона
+- 🎓 Курс / Курс
+
+If the speaker provided a URL or enough info to identify the source, include it as a clickable link on the source name.
+
+CSS:
+```css
+.sources-block { background: var(--bg-card); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; box-shadow: var(--shadow); border-top: 6px solid var(--green); }
+.sources-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.sources-desc { font-size: 14px; color: var(--grey); margin-bottom: 20px; }
+.source-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
+.source-item:last-child { border-bottom: none; padding-bottom: 0; }
+.source-type { font-size: 12px; font-weight: 700; color: var(--green); background: var(--bg-green-muted); border-radius: 8px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.source-body { flex: 1; }
+.source-name { font-size: 15px; font-weight: 500; color: var(--dark); margin-bottom: 4px; }
+.source-name a { color: var(--blue); text-decoration: none; }
+.source-name a:hover { text-decoration: underline; }
+.source-author { font-size: 13px; color: var(--grey); line-height: 1.5; }
+```
+
+---
+
+### 6. CTA Banner (required, placed BEFORE footer)
+
+Dark gradient banner inviting readers to request their own konspekt. Always include Telegram link as primary CTA.
+
+```html
+<div class="cta-banner">
+  <div class="cta-emoji">📩</div>
+  <div class="cta-text lang-uk">Хочеш собі такий же конспект?</div>
+  <div class="cta-text lang-ru">Хочешь себе такой же конспект?</div>
+  <div class="cta-sub lang-uk">Пишіть — зроблю конспект з будь-якого курсу, лекції або запису</div>
+  <div class="cta-sub lang-ru">Пишите — сделаю конспект из любого курса, лекции или записи</div>
+  <div class="cta-links">
+    <a href="https://t.me/tetervak" class="cta-link primary">✈️ @tetervak</a>
+    <a href="https://wa.me/491605193224" class="cta-link">📱 WhatsApp</a>
+    <a href="https://instagram.com/tetervak" class="cta-link">📸 Instagram</a>
+  </div>
+</div>
+```
+
+CSS:
+```css
+.cta-banner { background: linear-gradient(135deg, #101827 0%, #1e3a5f 100%); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 16px; box-shadow: var(--shadow); text-align: center; }
+.cta-emoji { font-size: 32px; margin-bottom: 12px; }
+.cta-text { font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px; line-height: 1.4; }
+.cta-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 20px; line-height: 1.5; }
+.cta-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.cta-link { background: white; border-radius: 10px; padding: 10px 20px; font-size: 14px; font-weight: 500; color: var(--dark); text-decoration: none; transition: all 0.2s; }
+.cta-link:hover { background: var(--bg-blue-muted); color: var(--blue); }
+.cta-link.primary { background: var(--blue); color: white; }
+.cta-link.primary:hover { background: #1a50c8; }
+```
+
+---
+
+### 6. Footer (required, last element)
 
 ```html
 <div class="footer-contact">
   <img class="contact-avatar" src="https://raw.githubusercontent.com/tetervak80-max/tdlife-konspekt/main/photo.jpg" alt="Дмитро Тетервак">
   <div class="contact-name">Дмитро Тетервак</div>
-  <div class="contact-desc lang-uk">
-    Ментор · Консультант · Фасилітатор мастермайндів<br>
-    Допомагає підприємцям вийти з операційки і побудувати систему
-  </div>
-  <div class="contact-desc lang-ru">
-    Ментор · Консультант · Фасилитатор мастермайндов<br>
-    Помогает предпринимателям выйти из операционки и построить систему
+  <div class="contact-desc">
+    <span class="lang-uk">Ментор · Консультант · Фасилітатор мастермайндів</span>
+    <span class="lang-ru">Ментор · Консультант · Фасилитатор мастермайндов</span>
   </div>
   <div class="contact-links">
     <a href="https://wa.me/491605193224">📱 +49 160 519 32 24</a>
-    <a href="https://t.me/tetervak">✈️ @tetervak · +38 067 536 38 02</a>
+    <a href="https://t.me/tetervak">✈️ @tetervak</a>
     <a href="https://instagram.com/tetervak">📸 @tetervak</a>
-    <a href="https://tiktok.com/@tetervakdmytro">🎵 @tetervakdmytro</a>
-  </div>
-  <div class="footer-time">
-    <span class="lang-uk">⏱ ~X хв читання</span>
-    <span class="lang-ru">⏱ ~X мин чтения</span>
+    <a href="https://t.me/konspekt_tdlife_bot">🤖 @konspekt_tdlife_bot</a>
   </div>
   <div class="footer-author">
-    <span class="lang-uk">Підготовлено асистентом <strong>Дмитра Тетервака</strong></span>
-    <span class="lang-ru">Подготовлено ассистентом <strong>Дмитрия Тетервака</strong></span>
+    <span class="lang-uk">Конспект згенеровано асистентом <strong>Дмитра Тетервака</strong></span>
+    <span class="lang-ru">Конспект сгенерирован ассистентом <strong>Дмитрия Тетервака</strong></span>
   </div>
 </div>
 ```
@@ -330,8 +476,7 @@ CSS:
 .contact-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .contact-links a { background: var(--bg-body); border-radius: 8px; padding: 7px 14px; font-size: 13px; color: var(--dark); text-decoration: none; border: 1px solid #e5e7eb; transition: all 0.2s; }
 .contact-links a:hover { border-color: var(--blue); color: var(--blue); }
-.footer-time { margin-top: 20px; font-size: 13px; color: var(--grey); }
-.footer-author { margin-top: 6px; font-size: 13px; color: var(--grey); }
+.footer-author { margin-top: 20px; font-size: 13px; color: var(--grey); }
 .footer-author strong { color: var(--blue); }
 ```
 
@@ -388,12 +533,37 @@ document.querySelectorAll('.section-content').forEach(c => {
 
 ## Content Rules
 
+**Page order (strict):**
+1. Language Switcher
+2. Header
+3. Cases Block (if transcript has practical cases/кейсы — required, goes here)
+4. Sections (5–8 thematic sections)
+5. Q&A Block (if transcript has Q&A)
+6. Checklist
+7. Sources Block (if speaker mentioned ANY sources — books, tools, channels, people, etc.)
+8. CTA Banner (always required)
+9. Footer (always required, last)
+
+---
+
 1. **Keep speaker's voice** — preserve their examples, jokes, metaphors. Don't sanitize into Wikipedia style.
+   Rule: keep exact numbers, named tools, named people, named mistakes the speaker mentioned.
+   ✗ "Він покращив показники сайту" — sanitized, no data
+   ✓ "За 15 ітерацій Lighthouse score виріс з 83 до 100 — агент сам прибрав React"
 2. **Quotes** — copy the most vivid phrases verbatim. Attribute to speaker if name is known.
 3. **box-pink** = mistakes and dangers. **box-blue** = insights and lifehacks.
-4. **Tags** — specific (#КонтрольВитрат, #ТипиКлієнтів), never generic (#Бізнес).
+4. **Tags** — 5-7 tags max. Each = a unique term spoken in the video (method, tool, person, framework, specific number).
+   Formula: #[ConceptFromVideo] — would break if the video didn't exist?
+   BANNED words in tags: AI, ШІ, Business, Marketing, Growth, Product, Tool, Learning, Productivity, Strategy
+   ✗ #AIAgent, #MetricOptimization, #IterativeAI — these apply to 1000+ videos
+   ✓ #AutoResearch, #KarpatyPattern, #LighthouseScore83to100, #programMD, #trainPY — only THIS video
 5. **Section emojis** — semantic: 🧠 psychology, 💰 money, 🚫 mistakes, 📊 analytics, 🎯 goals, etc.
-6. **Checklist** — concrete verbs only. "Зроби X" / "Сделай X". No vague items.
+6. **Checklist** — each item must answer: WHAT exactly + WHERE (tool/file/platform) + first action today.
+   Formula: "[Verb] [specific object] in/via [tool/file/platform]"
+   ✗ "Визнач цільову аудиторію" — vague, no entry point
+   ✓ "Відкрий Notion → створи таблицю 'Аудиторії' → впиши 3 сегменти з болями"
+   ✗ "Налаштуй воронку" — no tool, no first step
+   ✓ "Зайди в ManyChat → Flow Builder → додай 'Welcome' тригер з кнопками сегментації"
 7. **Reading time** — word count ÷ 200, round up.
 8. **Self-contained file** — all CSS in `<style>`, all JS in `<script>`, Google Fonts via CDN link only.
 
